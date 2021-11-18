@@ -20,6 +20,8 @@ namespace MultiplayerExtensions.UI
 
         CurvedTextMeshPro? modifierText;
 
+        private GameObject ScreenSystem;
+
         [Inject]
         internal void Inject(IMultiplayerSessionManager sessionManager, LobbyPlayerPermissionsModel permissionsModel, LobbySetupViewController lobbyViewController)
         {
@@ -46,6 +48,12 @@ namespace MultiplayerExtensions.UI
 
         [UIComponent("MissLightingToggle")]
         public ToggleSetting missLightingToggle = null!;
+
+        [UIComponent("MenuPositionUpToggle")]
+        public ToggleSetting menuPositionUpToggle = null!;
+
+        [UIComponent("MenuScaleUpToggle")]
+        public ToggleSetting menuScaleUpToggle = null!;
 
         [UIComponent("DownloadProgressText")]
         public FormattableText downloadProgressText = null!;
@@ -87,6 +95,22 @@ namespace MultiplayerExtensions.UI
             get => downloadProgressText.text;
             set { downloadProgressText.text = value; }
         }
+
+        private bool MenuPositionUpVal;
+        [UIValue("MenuPositionUp")]
+        public bool MenuPositionUp
+        {
+            get => MenuPositionUpVal;
+            set { MenuPositionUpVal = value; }
+        }
+
+        private bool MenuScaleUpVal;
+        [UIValue("MenuScaleUp")]
+        public bool MenuScaleUp
+        {
+            get => MenuScaleUpVal;
+            set { MenuScaleUpVal = value; }
+        }
         #endregion
 
         #region UIActions
@@ -121,6 +145,22 @@ namespace MultiplayerExtensions.UI
             MissLighting = value;
             missLightingToggle.Value = value;
         }
+
+        [UIAction("SetMenuPositionUp")]
+        public void SetMenuPositionUp(bool value)
+        {
+            MenuPositionUp = value;
+            menuPositionUpToggle.Value = value;
+            SetScreenSystem();
+        }
+
+        [UIAction("SetMenuScaleUp")]
+        public void SetMenuScaleUp(bool value)
+        {
+            MenuScaleUp = value;
+            menuScaleUpToggle.Value = value;
+            SetScreenSystem();
+        }
         #endregion
 
         private void OnActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
@@ -129,6 +169,30 @@ namespace MultiplayerExtensions.UI
             {
                 //Transform spectatorText = transform.Find("Wrapper").Find("SpectatorModeWarningText");
                 //spectatorText.position = new Vector3(spectatorText.position.x, 0.25f, spectatorText.position.z);
+
+                if (!ScreenSystem)
+                {
+                    ScreenSystem = GameObject.Find("MenuCore/UI/ScreenSystem");
+                }
+
+                SetScreenSystem();
+
+            }
+        }
+
+        private void SetScreenSystem()
+        {
+            if (ScreenSystem)
+            {
+                ScreenSystem.transform.position = new Vector3(0.0f, MenuPositionUp ? 0.5f : 0.1f, 0.1f);
+                if (MenuScaleUp)
+                {
+                    ScreenSystem.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                }
+                else
+                {
+                    ScreenSystem.transform.localScale = new Vector3(0.55f, 0.55f, 0.55f);
+                }
             }
         }
     }

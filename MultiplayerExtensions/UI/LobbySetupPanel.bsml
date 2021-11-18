@@ -7,7 +7,9 @@
       <toggle-setting id="HologramToggle" value='Hologram' on-change='SetHologram' text='Hologram' hover-hint='Toggles the hologram showing the player in first place.'></toggle-setting>
       <toggle-setting id="LagReducerToggle" value='LagReducer' on-change='SetLagReducer' text='Lag Reducer' hover-hint='Makes multiplayer easier for computers to handle.'></toggle-setting>
       <toggle-setting id="MissLightingToggle" value='MissLighting' on-change='SetMissLighting' text='Miss Lighting' hover-hint='Enables special lighting when someone misses a note.'></toggle-setting>
-    </vertical>
+      <toggle-setting id="MenuPositionUpToggle" value='MenuPositionUp' on-change='SetMenuPositionUp' text='Menu Position Up' hover-hint='Menu Position Up.'></toggle-setting>
+      <toggle-setting id="MenuScaleUpToggle" value='MenuScaleUp' on-change='SetMenuScaleUp' text='Menu Scale Up' hover-hint='Menu Scale Up.'></toggle-setting>
+	</vertical>
   </horizontal>
   <text id='DownloadProgressText' value='DownloadProgress' text='' align='Center'></text>
 </vertical>
